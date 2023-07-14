@@ -12,13 +12,14 @@
     align-items: center;
     justify-content: center;
     background-color: #585858;
-
+    flex-direction: row;
   }
 
   .container {
     /* Permet d'avoir les bords superieurs qui se rapproche de l'ecran*/
     perspective: 1000px;
-
+    display: flex;
+    gap: 20px
   }
   
   .card {
@@ -29,18 +30,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    perspective: 1000px;
+    /* perspective: 1000px; */
     /* permet d'afficher le verso */
     transform-style: preserve-3d 
   }
 
-  .card_content{
-    background-color: aqua;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
 
   img{
     width: 100%;
@@ -83,6 +77,21 @@
     border-radius: 30px;
 
   }
+
+
+  .front {
+    opacity: 1;
+    transition: opacity 2s ease-out;
+  }
+
+  .front_loading {
+    opacity: 0;
+  }
+
+  .back_loading {
+    transform: rotateY(0deg);
+  }
+
 
   @keyframes rotate {
   0% {
