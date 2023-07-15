@@ -1,133 +1,81 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+--color1: rgb(0, 231, 255);
+--color2: rgb(255, 0, 231);
+--back: url(https://cdn2.bulbagarden.net/upload/1/17/Cardback.jpg);
+--charizard1: #fac;
+--charizard2: #ddccaa;
+--charizardfront: url(https://assets.codepen.io/13471/charizard-gx.webp);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: #585858;
+  flex-direction: row;
+}
+
+.cards {
+  /* Permet d'avoir les bords superieurs qui se rapproche de l'ecran*/
+  perspective: 1000px;
+  display: flex;
+  gap: 20px;
+
+}
+
+.card {
+  height: 500px;
+  width: 350px;
+  transform-style: preserve-3d;
+  position: relative;
+  margin: 20px;
+  /* overflow: hidden; */
+  z-index: 10;
   
-  body {
-    font-family: "Poppins", sans-serif;
-    min-height: 100vh;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-    background-color: #585858;
-
-  }
-
-  .container {
-    /* Permet d'avoir les bords superieurs qui se rapproche de l'ecran*/
-    perspective: 1000px;
-
-  }
-  
-  .card {
-    height: 500px;
-    width: 350px;
-    border-radius: 30px;
-    /* box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2); */
-    box-shadow: 
-    -5px -5px 5px -5px #fac,
-    5px 5px 5px -5px #ddccaa,
+  border-radius: 5% / 3.5%;
+  box-shadow: 
+    -5px -5px 5px -5px var(--color1), 
+    5px 5px 5px -5px var(--color2), 
     -7px -7px 10px -5px transparent, 
     7px 7px 10px -5px transparent, 
     0 0 5px 0px rgba(255,255,255,0),
     0 55px 35px -20px rgba(0, 0, 0, 0.5);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1000px;
-    /* permet d'afficher le verso */
-    transform-style: preserve-3d ;
-
-  }
-
-  .card:hover {
-    box-shadow: 
-      -20px -20px 30px -25px #fac,
-      20px 20px 30px -25px #ddccaa,
-      -7px -7px 10px -5px #fac,
-      7px 7px 10px -5px #ddccaa,
-      0 0 13px 4px rgba(255,255,255,0.3),
-      0 55px 35px -20px rgba(0, 0, 0, 0.5);
-  }
-
-  .card_content{
-    background-color: aqua;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
   
-
-  img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 30px;
-
-  }
-
+  transition: transform 0.5s ease, box-shadow 0.2s ease;
+  will-change: transform, filter;
   
-  .card__glare {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    mix-blend-mode: hard-light;
-    border-radius: 30px;
-    opacity: 1;
+  background-color: #040712;
+  background-image: var(--front);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transform-origin: center;
 
-  }
-
-
-  .front,
-  .back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-
-  }
-
-  .back {
-    background-image: url("https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    transform: rotateY(180deg);
-    border-radius: 30px;
-
-  }
-
-  @keyframes rotate {
-  0% {
-    transform: rotateY(0deg) scale(1);
-  }
-  100% {
-    transform: rotateY(360deg) scale(1.5);
-  }
 }
 
-.rotate-animation {
-  animation: rotate 1s forwards;
+.card:hover {
+  box-shadow: 
+    -20px -20px 30px -25px var(--color1), 
+    20px 20px 30px -25px var(--color2), 
+    -7px -7px 10px -5px var(--color1), 
+    7px 7px 10px -5px var(--color2), 
+    0 0 13px 4px rgba(255,255,255,0.3),
+    0 55px 35px -20px rgba(0, 0, 0, 0.5);
 }
 
-  @keyframes rotateBack {
-  100% {
-    transform: rotateY(0deg) scale(1);
-  }
-  0% {
-    transform: rotateY(360deg) scale(1.5);
-  }
-}
-
-.rotate-animation2 {
-  animation: rotateBack 1s backwards;
+.card.charizard {
+  --color1: var(--charizard1);
+  --color2: var(--charizard2);
+  --front: var(--charizardfront);
 }
 
 
@@ -145,22 +93,22 @@
   transition: all .33s ease;
 }
 
-.card:before {
+/* .card:before {
   background-position: 50% 50%;
   background-size: 300% 300%;
   background-image: linear-gradient(
     115deg,
     transparent 0%,
-    #fac, 25%,
+    var(--color1) 25%,
     transparent 47%,
     transparent 53%,
-    #ddccaa, 75%,
+    var(--color2) 75%,
     transparent 100%
   );
   opacity: .5;
   filter: brightness(.5) contrast(1);
   z-index: 1;
-}
+} */
 
 .card:after {
   opacity: 1;
@@ -169,12 +117,12 @@
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
   background-position: 50% 50%;
   background-size: 160%;
-  background-blend-mode: overlay;
   z-index: 2;
   filter: brightness(1) contrast(1);
   transition: all .33s ease;
-  mix-blend-mode: color-dodge;
   opacity: .75;
+  mix-blend-mode: color-dodge;
+
 }
 
 .card.active:after,
@@ -192,13 +140,6 @@
 .card.active:before,
 .card:hover:before {
   animation: none;
-  background-image: linear-gradient(
-    110deg,
-    transparent 25%,
-    #fac, 48%,
-    #ddccaa, 52%,
-    transparent 75%
-  );
   background-position: 50% 50%;
   background-size: 250% 250%;
   opacity: .88;
@@ -213,3 +154,101 @@
   animation: none;
   transition: none;
 }
+
+
+.card__glare {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 500px;
+  width: 350px;
+  filter: brightness(.66) contrast(1.33);
+  background: linear-gradient(110deg,transparent 25%,rgb(0, 231, 255) 48%,rgb(255, 0, 231) 52%, transparent 75%);
+  background-repeat: no-repeat;
+  background-size: 250% 250%;
+  background-position: -100% -100%;
+  mix-blend-mode: color-dodge;
+  background-blend-mode: overlay;
+  border-radius: 5% / 3.5%;
+  opacity: .25;
+
+  filter: brightness(.66) contrast(1.33);
+}
+
+.card__sparks {
+  opacity: 1;
+  background-image: url("https://assets.codepen.io/13471/sparkles.gif"), 
+    url(https://assets.codepen.io/13471/holo.png), 
+    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+  background-position: 50% 50%;
+  background-size: 160%;
+  z-index: 2;
+  filter: brightness(1) contrast(1);
+  transition: all .33s ease;
+  opacity: .75;
+  mix-blend-mode: color-dodge;
+
+}
+
+
+.front,
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+
+}
+
+.back {
+  background-image: url("https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: rotateY(180deg);
+  border-radius: 30px;
+
+}
+
+
+.front {
+  opacity: 1;
+  transition: opacity 2s ease-out;
+}
+
+.front_loading {
+  opacity: 0;
+}
+
+.back_loading {
+  transform: rotateY(0deg);
+}
+
+
+@keyframes rotate {
+0% {
+  transform: rotateY(0deg) scale(1);
+}
+100% {
+  transform: rotateY(360deg) scale(1.5);
+}
+}
+
+.rotate-animation {
+animation: rotate 1s forwards;
+}
+
+@keyframes rotateBack {
+100% {
+  transform: rotateY(0deg) scale(1);
+}
+0% {
+  transform: rotateY(360deg) scale(1.5);
+}
+}
+
+.rotate-animation2 {
+animation: rotateBack 1s backwards;
+}
+
