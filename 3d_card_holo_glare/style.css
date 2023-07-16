@@ -1,0 +1,326 @@
+/**
+ * even though I cheated with the HTML/JS a 
+ * bit, here's all the CSS source so that 
+ * if you want to re-create the Card 
+ * Shining / Glare effects then you can 
+ * use the CSS below.
+**/
+
+:root {
+    --mx: 50%;
+    --my: 50%;
+    --s: 1;
+    --o: 0;
+    --tx: 0px;
+    --ty: 0px;
+    --rx: 0deg;
+    --ry: 0deg;
+    --pos: 50% 50%;
+    --posx: 50%;
+    --posy: 50%;
+    --hyp: 0;
+}
+
+.card {
+    --radius: 4.55% / 3.5%;
+    z-index: calc(var(--s) * 100);
+    transform: translate3d(0, 0, 0.1px);
+    will-change: transform, visibility;
+    transform-style: preserve-3d;
+}
+
+.card.interacting {
+    z-index: calc(var(--s) * 120);
+}
+
+.card.active .card__translater,
+.card.active .card__rotator {
+    touch-action: none;
+}
+
+.card__translater,
+.card__rotator {
+    display: grid;
+    perspective: 600px;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.card__translater {
+    width: auto;
+    position: relative;
+    transform: translate3d(var(--tx), var(--ty), 0) scale(var(--s));
+}
+
+.card__rotator {
+    --glow: #69d1e9;
+    transform: rotateY(var(--rx)) rotateX(var(--ry));
+    transform-style: preserve-3d;
+    box-shadow: 0px 10px 20px -5px black;
+    border-radius: var(--radius);
+    outline: none;
+    transition: box-shadow 0.4s ease, outline 0.2s ease;
+}
+
+.card.active .card__rotator {
+    box-shadow: 0 0 10px 0px var(--glow), 0 0 10px 0px var(--glow),
+        0 0 30px 0px var(--glow);
+}
+
+.card__rotator:focus {
+    box-shadow: 0 0 10px 0px var(--glow), 0 0 10px 0px var(--glow),
+        0 0 30px 0px var(--glow);
+}
+
+.card.active .card__rotator:focus {
+    box-shadow: 0px 10px 30px 3px black;
+}
+
+.card__rotator :global(*) {
+    width: 100%;
+    display: grid;
+    grid-area: 1/1;
+    border-radius: var(--radius);
+    image-rendering: optimizeQuality;
+    transform-style: preserve-3d;
+}
+
+.card__front,
+.card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+
+}
+
+.card__back {
+    transform: rotateY(180deg);
+    backface-visibility: visible;
+}
+
+.card__front,
+.card__front * {
+    backface-visibility: hidden;
+}
+
+.card__front {
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+    /* background-image: url(https://poke-holo.b-cdn.net/foils/pgo/masks/upscaled/011_foil_etched_radiantholo_2x.webp),
+    url(https://poke-holo.b-cdn.net/foils/pgo/foils/upscaled/011_foil_etched_radiantholo_2x.webp); */
+    /* mix-blend-mode: color-dodge; */
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.loading .card__front {
+    opacity: 0;
+}
+
+.loading .card__back {
+    transform: rotateY(0deg);
+}
+
+.card__shine {
+    --grain: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+CjxmaWx0ZXIgaWQ9Im4iPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMyI+PC9yZWN0Pgo8L3N2Zz4=");
+
+    --space: 5%;
+    --angle: 133deg;
+    --imgsize: 500px;
+
+    --red: #f80e7b;
+    --yel: #eedf10;
+    --gre: #21e985;
+    --blu: #0dbde9;
+    --vio: #c929f1;
+}
+
+/*
+  RADIANT
+
+*/
+
+.card[data-rarity*="radiant"] .card__shine {
+    --barwidth: 1.2%;
+    --space: 200px;
+
+    opacity: calc(((var(--hyp) * 0.7) + 0.2) * var(--o)) !important;
+    clip-path: inset(2.8% 4% round 2.55% / 1.5%);
+
+    background-image: repeating-linear-gradient(
+            55deg,
+            rgb(255, 161, 158) calc(var(--space) * 1),
+            rgb(85, 178, 255) calc(var(--space) * 2),
+            rgb(255, 199, 146) calc(var(--space) * 3),
+            rgb(130, 255, 213) calc(var(--space) * 4),
+            rgb(253, 170, 240) calc(var(--space) * 5),
+            rgb(148, 241, 255) calc(var(--space) * 6),
+            rgb(255, 161, 158) calc(var(--space) * 7)
+        ),
+        repeating-linear-gradient(
+            45deg,
+            hsl(0, 0%, 10%) 0%,
+            hsl(0, 0%, 10%) 1%,
+            hsl(0, 0%, 10%) var(--barwidth),
+            hsl(0, 0%, 20%) calc(var(--barwidth) + 0.01%),
+            hsl(0, 0%, 20%) calc(var(--barwidth) * 2),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 2 + 0.01%),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 3),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 3 + 0.01%),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 4),
+            hsl(0, 0%, 50%) calc(var(--barwidth) * 4 + 0.01%),
+            hsl(0, 0%, 50%) calc(var(--barwidth) * 5),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 5 + 0.01%),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 6),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 6 + 0.01%),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 7),
+            hsl(0, 0%, 20%) calc(var(--barwidth) * 7 + 0.01%),
+            hsl(0, 0%, 20%) calc(var(--barwidth) * 8),
+            hsl(0, 0%, 10%) calc(var(--barwidth) * 8 + 0.01%),
+            hsl(0, 0%, 10%) calc(var(--barwidth) * 9),
+            hsl(0, 0%, 0%) calc(var(--barwidth) * 9 + 0.01%),
+            hsl(0, 0%, 0%) calc(var(--barwidth) * 10)
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            hsl(0, 0%, 10%) 0%,
+            hsl(0, 0%, 10%) 1%,
+            hsl(0, 0%, 10%) var(--barwidth),
+            hsl(0, 0%, 20%) calc(var(--barwidth) + 0.01%),
+            hsl(0, 0%, 20%) calc(var(--barwidth) * 2),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 2 + 0.01%),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 3),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 3 + 0.01%),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 4),
+            hsl(0, 0%, 50%) calc(var(--barwidth) * 4 + 0.01%),
+            hsl(0, 0%, 50%) calc(var(--barwidth) * 5),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 5 + 0.01%),
+            hsl(0, 0%, 42.5%) calc(var(--barwidth) * 6),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 6 + 0.01%),
+            hsl(0, 0%, 35%) calc(var(--barwidth) * 7),
+            hsl(0, 0%, 20%) calc(var(--barwidth) * 7 + 0.01%),
+            hsl(0, 0%, 20%) calc(var(--barwidth) * 8),
+            hsl(0, 0%, 10%) calc(var(--barwidth) * 8 + 0.01%),
+            hsl(0, 0%, 10%) calc(var(--barwidth) * 9),
+            hsl(0, 0%, 0%) calc(var(--barwidth) * 9 + 0.01%),
+            hsl(0, 0%, 0%) calc(var(--barwidth) * 10)
+        );
+
+    background-size: 400% 400%, 210% 210%, 210% 210%;
+    background-position: calc(((var(--posx) - 50%) * -2.5) + 50%)
+            calc(((var(--posy) - 50%) * -2.5) + 50%),
+        calc(((var(--posx) - 50%) * 1.5) + 50%)
+            calc(((var(--posy) - 50%) * 1.5) + 50%),
+        calc(((var(--posx) - 50%) * 1.5) + 50%)
+            calc(((var(--posy) - 50%) * 1.5) + 50%);
+
+    background-blend-mode: exclusion, darken, color-dodge;
+
+    filter: brightness(0.95) contrast(4) saturate(0.75);
+    mix-blend-mode: color-dodge;
+}
+
+.card[data-rarity*="radiant"] .card__shine:after {
+    content: "";
+
+    background-image: url("https://res.cloudinary.com/simey/image/upload/Dev/PokemonCards/rainbow2.jpg"),
+        repeating-linear-gradient(
+            55deg,
+            rgb(255, 161, 158) calc(var(--space) * 1),
+            rgb(85, 178, 255) calc(var(--space) * 2),
+            rgb(255, 199, 146) calc(var(--space) * 3),
+            rgb(130, 255, 213) calc(var(--space) * 4),
+            rgb(253, 170, 240) calc(var(--space) * 5),
+            rgb(148, 241, 255) calc(var(--space) * 6),
+            rgb(255, 161, 158) calc(var(--space) * 7)
+        );
+
+    background-size: 40%, 400%;
+    background-position: center,
+        calc(((var(--posx) - 50%) * -2.5) + 50%)
+            calc(((var(--posy) - 50%) * -2.5) + 50%);
+
+    filter: brightness(1) contrast(1) saturate(0);
+    mix-blend-mode: soft-light;
+
+    background-blend-mode: multiply;
+}
+
+.card[data-rarity*="radiant"] .card__shine:before {
+    content: "";
+    z-index: 3;
+    grid-area: 1/1;
+
+    background-image: radial-gradient(
+        farthest-corner ellipse at calc(((var(--mx)) * 0.5) + 25%)
+            calc(((var(--my)) * 0.5) + 25%),
+        rgba(100, 100, 100, 0.5) 5%,
+        rgba(50, 50, 50, 0.4) 15%,
+        rgba(0, 0, 0, 0.6) 30%
+    );
+
+    background-position: center;
+    background-size: 350% 350%;
+
+    mix-blend-mode: multiply;
+}
+
+
+/********************************/
+
+html,
+body,
+iframe {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    background: #393c42;
+}
+
+
+
+
+
+
+
+
+/**********/
+
+p.scroll {
+    position: fixed;
+    font-size: 0.875rem;
+    left: 50px;
+    bottom: 20px;
+    width: 300px;
+    text-align: left;
+    color: cyan;
+    font-weight: bold;
+    text-shadow: 0 1px 0 black;
+    pointer-events: none;
+    cursor: default;
+    user-select: none;
+}
+svg {
+    position: fixed;
+    left: 25px;
+    bottom: 35px;
+    width: 22px;
+    fill: cyan;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 1px 0 black);
+    animation: bounce 1s ease infinite;
+    pointer-events: none;
+    cursor: default;
+    user-select: none;
+}
+
+@keyframes bounce {
+    50% {
+        transform: translateX(-50%) translateY(5px);
+    }
+}

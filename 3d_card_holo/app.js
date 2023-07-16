@@ -29,7 +29,9 @@ const card = document.querySelectorAll(".card");
       var p_opc = 20+(Math.abs(pa)*1.5);
       var lp = (50+(px - 50)/1.5);
       var tp = (50+(py - 50)/1.5);
+      var px_spark = (50+(px - 50)/7);
       var py_spark = (50+(py - 50)/7);
+        var opc = p_opc/100
       // console.log(px, py, pa, p_opc/100)
 
       if (isRotated) {
@@ -46,15 +48,11 @@ const card = document.querySelectorAll(".card");
         el.classList.remove("rotate-animation");
 
       } else {
-        // xAxis = (window.innerWidth / 2 - e.pageX) / 20;
-        // yAxis = -(window.innerHeight / 2 - e.pageY) / 20;
 
         xAxis = ((elRect.width / 2 - e.offsetX) / 20) ; //moitié de l'ecran - la position sur X, positif si sur la partie gauche de l'ecran par rapport du milieu et negatif si sur la parti droite de l'ecran
         yAxis = -((elRect.height / 2 - e.offsetY) / 20);
 
         currentXGlare = e.offsetX / elRect.width * 100;
-        // console.log("xAxis",xAxis)
-        // console.log("yAxis",yAxis)
 
         currentYGlare = e.offsetY / elRect.height * 100;
         el.classList.remove("rotate-animation2");
@@ -62,18 +60,22 @@ const card = document.querySelectorAll(".card");
       }
 
       el.style.transform = `scale(${isRotated ? 1.5 : 1}) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-      el.children[0].style.opacity = p_opc/100;
-      // el.children[0].style.background = `linear-gradient( 110deg, hsla(0, 0%, 100%, 0.6) 10%, hsla(0, 0%, 100%, 0.45) 20%, hsla(0, 0%, 0%, 0.3) 90% )`
-      const rect = el.children[0].getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
       const mouseX = rect.width - (e.clientX - rect.left);
       const mouseY = rect.height -( e.clientY - rect.top);
-      const bgPosX = (mouseX / rect.width) * 100;
+      const bgPosX = (mouseX / rect.width) * 100 ;
       const bgPosY = (mouseY / rect.height) * 100;
-      el.children[0].style.backgroundPosition = `${bgPosX}% ${bgPosY}%`
-      el.children[1].style.backgroundPosition = `${bgPosX}% ${bgPosY}%`
 
-      // el.children[0].style.background = `linear-gradient(110deg,transparent 25%,rgb(0, 231, 255) 48%,rgb(255, 0, 231) 52%, transparent 75%)`
-      console.log(bgPosX, bgPosY, p_opc/100)
+
+      el.style.setProperty('--x', `${lp}%`);
+      el.style.setProperty('--y', `${tp}%`);
+      el.style.setProperty('--px_spark', `${px_spark}%`);
+      el.style.setProperty('--py_spark', `${py_spark}%`);
+
+      el.style.setProperty('--opc', opc);
+
+
+      console.log(bgPosX, bgPosY, opc)
     }
   });
 

@@ -13,24 +13,28 @@
 --charizardfront: url(https://assets.codepen.io/13471/charizard-gx.webp);
 }
 
+
+html, body {
+  height: 100%;
+  background-color: #333844;
+  padding: 0;
+  z-index: 1;
+  transform: translate3d(0,0,0.1px);
+}
 body {
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
+  color: white;
+  background-color: #333844;
+  font-family: "Heebo", sans-serif;
   display: flex;
-  gap: 20px;
   align-items: center;
   justify-content: center;
-  background-color: #585858;
-  flex-direction: row;
 }
 
 .cards {
-  /* Permet d'avoir les bords superieurs qui se rapproche de l'ecran*/
   perspective: 1000px;
-  display: flex;
-  gap: 20px;
 
 }
+
 
 .card {
   height: 500px;
@@ -38,7 +42,7 @@ body {
   transform-style: preserve-3d;
   position: relative;
   margin: 20px;
-  /* overflow: hidden; */
+  overflow: hidden;
   z-index: 10;
   
   border-radius: 5% / 3.5%;
@@ -93,7 +97,7 @@ body {
   transition: all .33s ease;
 }
 
-/* .card:before {
+.card:before {
   background-position: 50% 50%;
   background-size: 300% 300%;
   background-image: linear-gradient(
@@ -108,12 +112,11 @@ body {
   opacity: .5;
   filter: brightness(.5) contrast(1);
   z-index: 1;
-} */
+}
 
 .card:after {
-  opacity: 1;
   background-image: url("https://assets.codepen.io/13471/sparkles.gif"), 
-    url(https://assets.codepen.io/13471/holo.png), 
+  url(https://assets.codepen.io/13471/holo.png), 
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
   background-position: 50% 50%;
   background-size: 160%;
@@ -128,19 +131,23 @@ body {
 .card.active:after,
 .card:hover:after {
   filter: brightness(1) contrast(1);;
-  opacity: 1;
+  opacity: var(--opc);
+  background-position:  var(--px_spark) var(--py_spark);
+
 }
 
 .card.active,
 .card:hover {
   animation: none;
   transition: box-shadow 0.1s ease-out;
+
 }
 
 .card.active:before,
 .card:hover:before {
   animation: none;
-  background-position: 50% 50%;
+  background: linear-gradient(110deg,transparent 25%,rgb(0, 231, 255) 48%,rgb(255, 0, 231) 52%, transparent 75%);
+  background-position:  var(--x) var(--y);
   background-size: 250% 250%;
   opacity: .88;
   filter: brightness(.66) contrast(1.33);
@@ -155,40 +162,6 @@ body {
   transition: none;
 }
 
-
-.card__glare {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 500px;
-  width: 350px;
-  filter: brightness(.66) contrast(1.33);
-  background: linear-gradient(110deg,transparent 25%,rgb(0, 231, 255) 48%,rgb(255, 0, 231) 52%, transparent 75%);
-  background-repeat: no-repeat;
-  background-size: 250% 250%;
-  background-position: -100% -100%;
-  mix-blend-mode: color-dodge;
-  background-blend-mode: overlay;
-  border-radius: 5% / 3.5%;
-  opacity: .25;
-
-  filter: brightness(.66) contrast(1.33);
-}
-
-.card__sparks {
-  opacity: 1;
-  background-image: url("https://assets.codepen.io/13471/sparkles.gif"), 
-    url(https://assets.codepen.io/13471/holo.png), 
-    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
-  background-position: 50% 50%;
-  background-size: 160%;
-  z-index: 2;
-  filter: brightness(1) contrast(1);
-  transition: all .33s ease;
-  opacity: .75;
-  mix-blend-mode: color-dodge;
-
-}
 
 
 .front,
