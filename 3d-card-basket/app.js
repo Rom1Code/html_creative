@@ -8,9 +8,14 @@ card.forEach(el => {
     let xAxis, yAxis;
     let isAnimationInProgress = false;
 
+    let leftBorderWidth = 0
+    let rightBorderWidth = 0
+    let topBorderWidth = 0
+    let bottomBorderWidth = 0
+
   //Moving Animation Event
   el.addEventListener("mousemove", (e) => {
-
+    console.log(e.pageX)
     if(!isAnimationInProgress){
 
       let elRect = el.getBoundingClientRect()
@@ -30,20 +35,68 @@ card.forEach(el => {
       el.style.setProperty('--y', `${tp}%`);
 
       if (isRotated) {
-        xAxis = ((window.innerHeight / 2 - e.pageX) / 20) * 1.3;
-        yAxis = -((window.innerWidth / 2 - e.pageY) / 20) * 1.3;
+
+        // xAxis = ((window.innerHeight / 2 - e.pageX) / 20) * 1.3;
+        // yAxis = -((window.innerWidth / 2 - e.pageY) / 20) * 1.3;
+        xAxis = 0;
+        yAxis = 0;
+
         currentXGlare = (e.offsetX / elRect.height * 100) * 1.3;
         currentYGlare = (e.offsetY / elRect.width * 100) * 1.3;
-        // el.classList.remove("rotate-animation");
+        // if((elRect.height  /2 - e.offsetX * 1.3) < 0) {
+        //   leftBorderWidth = 0 
+        //   rightBorderWidth= (((e.offsetX *1.3 - elRect.height/2) ) / (elRect.height / 2)) * 4
+        // }
+        // else {
+        //   leftBorderWidth = (((elRect.height /2 - e.offsetX *1.3) ) / (elRect.height / 2)) * 4
+        //   rightBorderWidth = 0
+        // }
+  
+        // if((elRect.width /2 - e.offsetY *1.3) < 0){
+        //   topBorderWidth = 0
+        //   bottomBorderWidth = (((e.offsetY *1.3 - elRect.width/2)) / (elRect.width/2)) * 4
+        // }
+        // else{
+        //   topBorderWidth = (((elRect.width / 2 - e.offsetY *1.3)) / (elRect.width / 2)) * 4
+        //   bottomBorderWidth = 0
+        // }
+        el.style.borderTopWidth = `0px`
+        el.style.borderRightWidth = `0px`
+        el.style.borderBottomWidth = `0px`
+        el.style.borderLeftWidth = `0px`
+      } 
+      else {
 
-      } else {
         xAxis = (window.innerWidth / 2 - e.pageX) / 20;
         yAxis = -(window.innerHeight / 2 - e.pageY) / 20;
         currentXGlare = e.offsetX / elRect.width * 100;
         currentYGlare = e.offsetY / elRect.height * 100;
-        el.classList.remove("rotate-animation2");
 
-      }
+        if((elRect.width /2 - e.offsetX) < 0) {
+          leftBorderWidth = 0 
+          rightBorderWidth= (((e.offsetX - elRect.width/2) ) / (elRect.width / 2 )) * 4
+        }
+        else {
+          leftBorderWidth = ((elRect.width / 2 - e.offsetX) / (elRect.width / 2)) * 4
+          rightBorderWidth = 0
+        }
+  
+        if((elRect.height /2 - e.offsetY) < 0){
+          topBorderWidth = 0
+          bottomBorderWidth = (((e.offsetY - elRect.height/2)) / (elRect.height/2)) * 4
+        }
+        else{
+          topBorderWidth = ((elRect.height / 2 - e.offsetY) / (elRect.height / 2)) * 4
+          bottomBorderWidth = 0
+        }
+        el.style.borderTopWidth = `${topBorderWidth}px`
+        el.style.borderRightWidth = `${rightBorderWidth}px`
+        el.style.borderBottomWidth = `${bottomBorderWidth}px`
+        el.style.borderLeftWidth = `${leftBorderWidth}px` 
+        el.classList.remove("rotate-animation2");
+     }
+
+
       el.style.transform = `scale(${isRotated ? 1.3 : 1}) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
       el.children[2].style.background = `radial-gradient(circle at ${currentXGlare}% ${currentYGlare}%, hsla(0, 0%, 100%, 0.6) 10%, hsla(0, 0%, 100%, 0.45) 20%, hsla(0, 0%, 0%, 0.3) 90% )`
     }
@@ -57,7 +110,7 @@ card.forEach(el => {
   });
   //Animate Out
   el.addEventListener("mouseleave", (e) => {
-
+    el.style.borderWidth = "0px";
     el.style.transition = "all 1.5s ease";
     el.style.transform = `scale(${isRotated ? 1.3 : 1}) rotateY(0deg) rotateX(0deg)`;
 
@@ -82,6 +135,7 @@ card.forEach(el => {
   });
 
   el.addEventListener("click", () => {
+    el.style.borderWidth = "0px";
 
     if (!isAnimationInProgress) {
       isAnimationInProgress = true;
@@ -92,7 +146,8 @@ card.forEach(el => {
       }
       else{
         el.style.transform = `scale(1) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        el.classList.remove("rotate-animation")
+        el.classList.remove("rotate-animation");
+
         el.classList.add("rotate-animation2");
         isRotated = false;
       }

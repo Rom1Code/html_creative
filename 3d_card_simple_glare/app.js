@@ -95,10 +95,6 @@ const card = document.querySelectorAll(".card");
   });
 
   el.addEventListener("click", () => {
-    let elRect = el.getBoundingClientRect()
-    let xInitial = (window.innerWidth)/elRect.left
-    let yInitial = (window.innerHeight) /elRect.top
-    console.log(xInitial)
 
     el.children[0].classList.remove("back_loading")
     if (!isAnimationInProgress) {

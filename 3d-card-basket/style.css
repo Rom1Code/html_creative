@@ -29,7 +29,8 @@
     /* permet d'afficher le verso */
     transform-style: preserve-3d ;
     /* animation : revealFront 2s normal fonctionne ici ou on ajoutant la classe dans le html*/ 
-
+    border: solid;
+    border-width: 0px 0px 0px 0px;
   }
 
   .front,
@@ -96,14 +97,14 @@
     border-top-left-radius: 30px;
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
-    mix-blend-mode: hard-light;
+    /* mix-blend-mode: hard-light;
     position: relative;
     z-index: 1;
-    background-color: black;
+    background-color: black; */
 
   }
 
-  .card:after {
+  /* .card:after {
     background-image: url("https://assets.codepen.io/13471/sparkles.gif"), 
     url(https://assets.codepen.io/13471/holo.png), 
 ;    background-position: 50% 50%;
@@ -138,7 +139,7 @@
       -7px 7px 10px -5px white, 
       0 0 13px 4px rgba(255,255,255,0.3),
       0 55px 35px -20px rgba(0, 0, 0, 0.5);
-  }
+  } */
 
   .card__player p {
     writing-mode: vertical-rl;
